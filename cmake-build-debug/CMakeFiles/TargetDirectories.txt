@@ -1,0 +1,3 @@
+C:/CLion/JetBrains/cmake-build-debug/CMakeFiles/JetBrains.dir
+C:/CLion/JetBrains/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/CLion/JetBrains/cmake-build-debug/CMakeFiles/rebuild_cache.dir
