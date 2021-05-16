@@ -1,6 +1,3 @@
-#ifndef STURM_H
-#define STURM_H
-
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -21,11 +18,11 @@ class Sturm {
     double min = -1.0, max = 1.0, roots[max_order];
     
     int build_sturm();
-    int modp(Poly *, Poly *, Poly *);
+    static int modp(Poly *, Poly *, Poly *);
     int num_roots();
     int num_changes(const double &);
     void bisect(double, double, const int &, const int &, double *);
-    double eval_poly(int, double *, double);
+    static double eval_poly(int, double *, double);
     int mod_rf(int, double *, double, double, double *);
 
 
@@ -34,9 +31,8 @@ class Sturm {
     void set_shturm_seq(double a, int i);
     void set_order(int n0);
     std::vector<std::vector<double>> get_sturm_sequence();
-    void show_sturm_sequence(const std::vector<std::vector<double>> &);
+    static void show_sturm_sequence(const std::vector<std::vector<double>> &);
     std::vector<double> get_real_roots();
     void show_roots(const std::vector<double> &);
 };
 
-#endif
