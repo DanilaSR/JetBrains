@@ -1,5 +1,4 @@
-#ifndef APPROXIMATION_GAUSS_H
-#define APPROXIMATION_GAUSS_H
+#include <iostream>
 #include <vector>
 
 template<typename T>
@@ -62,4 +61,3 @@ Matrix<T> gauss(Matrix<T> M, std::vector<T> b){
     return M;
 }
 
-#endif //APPROXIMATION_GAUSS_H
