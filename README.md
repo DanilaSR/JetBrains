@@ -1,7 +1,7 @@
-# Sturm sequences
+# Eigenvalues and eigenvectors of symmetric matrix
 
 A way to find real eigenvalues and eigenvectors of symmetric matrix.
-(Your matrix should be entered into the file input_Matrix.txt with its dimensions).
+(Your matrix should be entered into the file input_Matrix.txt with its dimensions)
 
 ## Example of usage:
 
