@@ -4,6 +4,8 @@ A way to find real eigenvalues and eigenvectors of symmetric matrix.
 
 ## Example of usage:
 
+... 
+
 Original matrix:
 5x^0  4x^0  6x^0  9x^0  8x^0
 4x^0  5x^0  4x^0  1x^0  2x^0
@@ -54,3 +56,5 @@ Sturm sequence for:
 |1.042|
 |1.090|
 |1    |
+
+...
