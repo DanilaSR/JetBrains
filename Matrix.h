@@ -174,12 +174,6 @@ public:
         }
     }
 
-    Matrix<T> delete_last_row(){
-        delete[] data[n - 1];
-        n--;
-        return *this;
-    }
-
     void subtraction_rows(int p, int q){
         for (int i = 0; i < getM(); i++){
             data[p][i] = data[p][i] - data[q][i];
@@ -200,25 +194,13 @@ public:
 
     void print_vector(){
         for (int i = 0; i < getN() - 1; i++){
-            cout << "|" << -data[i][getM() - 1] << "|" << endl;
+            cout << "|";
+            printf("%.3f", -data[i][getM() - 1]);
+            cout << "|" << endl;
         }
-        cout << "|" << 1 <<' ' <<' ' <<' ' <<' ' <<' ' <<' ' <<' ' <<  "|" <<  endl;
+        cout << "|" << 1 <<' ' <<' ' <<' ' << ' ' << "|" <<  endl;
     }
 
-
-
-    void resize(int n0, int m0) {
-        for (int i = 0; i < this->n0; i++){
-            delete[] this->data[i];
-        }
-        delete[] this->data;
-        this->n = n0;
-        this->m = m0;
-        this->data = new T*[n0];
-        for (int i = 0; i < n0; i++) {
-            this->data[i] = new T[m0];
-        }
-    }
 
     Matrix<T> operator + (Matrix<T> const &other) const {
         Matrix<T> ans(this->n, this->m);
@@ -332,16 +314,6 @@ public:
         return false;
     }
 
-    Matrix<T> get_submatrix(int start_str, int start_col, int n0, int m0) const {
-        T ans[n0][m0];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                ans[i][j] = this->data[start_str + i][start_col + j];
-            }
-        }
-        Matrix submatrix(*ans, n0, m0);
-        return submatrix;
-    }
 
     T algebraic_addition(int i, int j) const {
 
@@ -369,18 +341,6 @@ public:
         return ans;
     }
 
-    Matrix<T> inverse() const {
-        T det = this->determinant();
-        T arr[this->n][this->m];
-        for (int i = 0; i < this->n; i++) {
-            for (int j = 0; j < this->m; j++) {
-                arr[i][j] = this->algebraic_addition(i, j) / det;
-            }
-        }
-        Matrix ans(*arr, this->n, this->m);
-        return ans.transpose();
-    }
-
     Matrix<T> minor(int i, int j) const {
         T arr[this->n - 1][this->m - 1];
         int str = 0, col = 0;
@@ -400,24 +360,6 @@ public:
         }
         Matrix ans(*arr, this->n - 1, this->m - 1);
         return ans;
-    }
-
-    Matrix<T> makeL() const {
-        Matrix<T> L;
-        for (auto i = 0; i < m; i++) {
-            for (auto j = i + 1; j < n; j++){
-                L(i, j) = data[i][j];
-            }
-        }
-        return L;
-    }
-
-    T norm() const {
-        T sum = 0;
-        for(size_t i = 0; i < m; ++i){
-            sum += data[1][i] * data[1][i];
-        }
-        return sqrt(sum);
     }
 
     T determinant() const {
@@ -442,50 +384,7 @@ Matrix<T> operator * (double num, Matrix<T> const &M) {
     return M * num;
 }
 
-template <typename T>
-T norm(const Matrix<T>& a){
-    T sum = 0;
-    for(auto i = 0; i < a.getN(); ++i){
-        sum += a(i, 0) * a(i, 0);
-    }
-    return sqrt(sum);
-}
 
-template <typename T>
-class Matrix_U: public Matrix<T> {
-public:
-    explicit Matrix_U <T> (Matrix<T> A) {
-        this->n = A.getN();
-        this->m = A.getM();
-        this->data = new T*[this->n];
-        for (int i = 0; i < this->n; i++) {
-            this->data[i] = new T[this->m];
-        }
-        for (size_t i = 0; i < A.getN(); i++){
-            for (size_t j = 0; j < A.getM(); j++){
-                if (i > j) this->data[i][j] = A(i, j);
-                else this->data[i][j] = 0;
-            }
-        }
-    }
-};
 
-template <typename T>
-class Matrix_L: public Matrix<T> {
-public:
-    explicit Matrix_L <T> (Matrix<T> A) {
-        this->n = A.getN();
-        this->m = A.getM();
-        this->data = new T*[this->n];
-        for (int i = 0; i < this->n; i++) {
-            this->data[i] = new T[this->m];
-        }
-        for (size_t i = 0; i < A.getN(); i++){
-            for (size_t j = 0; j < A.getM(); j++){
-                if (i <= j) this->data[i][j] = A(i, j);
-                else this->data[i][j] = 0;
-            }
-        }
-    }
-};
+
 
