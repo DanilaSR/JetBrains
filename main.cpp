@@ -1,16 +1,16 @@
 #include <iostream>
 #include "Matrix.h"
-#include "Polynom.cpp"
+#include "Polynom.h"
 #include "sturm.h"
 #include "sturm.cpp"
 #include "gauss.h"
 #include <vector>
 
-
 using namespace :: std;
 
 int main() {
     Polynom x(2), p;
+    vector <double> a; //вектор для записи корней
     x.koef[0] = 1;
     x.koef[1] = 0;
 
@@ -39,11 +39,12 @@ int main() {
     cout << "Determinant of the characteristic equation:" << endl;
     cout << p << endl;
 
-    while (p.value(0) == 0){    //Избавляемся от нулевых корней
-        p = p/x;
-        int h = 0;
+    if (p.value(0) == 0){
+        a.push_back(0);
+        while (p.value(0) == 0){    //Избавляемся от нулевых корней
+            p = p/x;
+        }
     }
-
 
     Sturm sturm;
     sturm.set_order(p.n - 1);
@@ -52,7 +53,7 @@ int main() {
         sturm.set_shturm_seq(p.koef[p.n - i - 1], i);
     }
     sturm.show_sturm_sequence(sturm.get_sturm_sequence());
-    vector <double> a = sturm.get_real_roots();
+    a = sturm.get_real_roots();
     sturm.show_roots(a);
 
 
