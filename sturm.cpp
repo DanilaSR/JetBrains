@@ -1,22 +1,14 @@
-// A class based C++14 program fork of the one located at:
-// https://webdocs.cs.ualberta.ca/~graphics/books/GraphicsGems/gems/Sturm/
-// Author: @vjavs
-// Timestamp: 14 Mar 2017
-
-/*
-  Using Sturm Sequences to Bracket Real Roots of Polynomial Equations by D.G.
-  Hook and P.R. McAree from "Graphics Gems", Academic Press, 1990
- */
-
 #include <iostream>
 #include <cmath>
 #include <vector>
 
+using namespace :: std;
+
 // Some useful constants
-constexpr double rel_error {1.0e-10};    // smallest relative error we want
+constexpr double rel_error {1.0e-5};    // smallest relative error we want
 constexpr int max_pow = 32;              // max power of 10 we wish to search to
 constexpr int max_it = 800;              // max number of iterations
-constexpr double small_enough {1.0e-12}; // a coefficient smaller than
+constexpr double small_enough {1.0e-5}; // a coefficient smaller than
                                          // small_enough is considered to be
                                          // zero (0.0).
 
@@ -31,13 +23,13 @@ void Sturm::set_shturm_seq(double a, int i){
     sturm_seq[0].coef[i] = a;
 }
 
-std::vector<std::vector<double>> Sturm::get_sturm_sequence()
+vector<std::vector<double>> Sturm::get_sturm_sequence()
 /*
   Build the Sturm sequence and returns a vector of coefficients
  */
 {
-    std::vector<std::vector<double>> seq;
-    std::vector<double> coefs;
+    vector<std::vector<double>> seq;
+    vector<double> coefs;
     
     num_poly = build_sturm();
     for (auto i = order; i >= 0; --i)
@@ -52,16 +44,16 @@ std::vector<std::vector<double>> Sturm::get_sturm_sequence()
     return seq;
 }
 
-void Sturm::show_sturm_sequence(const std::vector<std::vector<double>> &seq)
+void Sturm::show_sturm_sequence(const vector<vector<double>> &seq)
 {
-    std::cout << "Sturm sequence for:\n";
-    std::cout << std::fixed;
+    cout << "Sturm sequence for:\n";
+    cout << fixed;
     auto first = true;
     for (const auto &poly : seq) {
 	for(const auto &coef : poly)
-	    std::cout << coef << ' ';
-	if (first) { std::cout << "\n"; first = false;}
-        std::cout << "\n";
+	    cout << coef << ' ';
+	if (first) { cout << "\n"; first = false;}
+        cout << "\n";
     }
 }
 
@@ -138,12 +130,12 @@ int Sturm::modp(Poly *u, Poly *v, Poly *r)
     return r->ord;
 }
 
-std::vector<double> Sturm::get_real_roots()
+vector<double> Sturm::get_real_roots()
 {
     // Get the number of real roots
     nroots = num_roots();
     if (nroots == 0) {
-	std::cout << "solve: no real roots\n";
+	cout << "solve: no real roots\n";
         exit (0); ///exception?
     }
     
@@ -154,7 +146,7 @@ std::vector<double> Sturm::get_real_roots()
         nchanges = num_changes(min);
     }
     if (nchanges != atmin) {
-	std::cout << "solve: unable to bracket all negative roots\n";
+	cout << "solve: unable to bracket all negative roots\n";
         atmin = nchanges;
     }
 
@@ -164,7 +156,7 @@ std::vector<double> Sturm::get_real_roots()
         nchanges = num_changes(max);
     }
     if (nchanges != atmax) {
-	std::cout << "solve: unable to bracket all positive roots\n";
+	cout << "solve: unable to bracket all positive roots\n";
         atmax = nchanges;
     }
     nroots = atmin - atmax;
@@ -173,7 +165,7 @@ std::vector<double> Sturm::get_real_roots()
     bisect(min, max, atmin, atmax, roots);
 
     // fills vector of roots
-    std::vector<double> roots_vec;
+    vector<double> roots_vec;
     for (auto i = 0; i != nroots; ++i)
         roots_vec.push_back(roots[i]);
 
